@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>حساب الاتجاه النهائي</title>
+<style>
+  body { font-family: Arial, sans-serif; text-align: center; padding: 20px; background: #f0f0f0; }
+  input { width: 80px; padding: 5px; margin: 5px; font-size: 16px; }
+  button { padding: 10px 20px; font-size: 16px; margin-top: 10px; cursor: pointer; }
+  .result { margin-top: 20px; font-size: 22px; font-weight: bold; }
+</style>
+</head>
+<body>
+
+<h1>برنامج حساب الاتجاه النهائي</h1>
+
+<p>أدخل القيم التالية:</p>
+<input type="number" id="awal" placeholder="أول">
+<input type="number" id="q1" placeholder="ربع1">
+<input type="number" id="mid" placeholder="نصف">
+<input type="number" id="q3" placeholder="ربع3">
+<input type="number" id="akhir" placeholder="آخر">
+<br>
+<button onclick="calculateTrend()">احسب الاتجاه</button>
+
+<div class="result" id="result"></div>
+
+<script>
+function calculateTrend() {
+    // جلب القيم من المستخدم
+    let awal = parseFloat(document.getElementById('awal').value);
+    let q1 = parseFloat(document.getElementById('q1').value);
+    let mid = parseFloat(document.getElementById('mid').value);
+    let q3 = parseFloat(document.getElementById('q3').value);
+    let akhir = parseFloat(document.getElementById('akhir').value);
+
+    if([awal, q1, mid, q3, akhir].some(isNaN)) {
+        alert("الرجاء إدخال جميع القيم!");
+        return;
+    }
+
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>حساب الاتجاه النهائي</title>
+<script src="https://cdn.jsdelivr.net/npm/tesseract.js@4.1.1/dist/tesseract.min.js"></script>
+<style>
+  body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #74ebd5, #ACB6E5);
+    color: #333;
+    text-align: center;
+    padding: 30px;
+  }
+
+  h1 {
+    color: #fff;
+    text-shadow: 2px 2px 5px #000;
+  }
+
+  input[type="number"], input[type="file"] {
+    width: 100px;
+    padding: 10px;
+    margin: 8px;
+    border-radius: 8px;
+    border: 2px solid #fff;
+    font-size: 16px;
+    outline: none;
+  }
+
+  input[type="number"]:focus {
+    border-color: #ff9800;
+  }
+
+  button {
+    padding: 12px 25px;
+    font-size: 16px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    background-color: #ff9800;
+    color: #fff;
+    margin-top: 10px;
+    transition: background 0.3s;
+  }
+
+  button:hover {
+    background-color: #e68900;
+  }
+
+  .result {
+    margin-top: 30px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #fff;
+    text-shadow: 1px 1px 3px #000;
+  }
+
+  hr {
+    margin: 30px 0;
+    border: 1px solid #fff;
+  }
+</style>
+</head>
+<body>
+
+<h1>📊 برنامج حساب الاتجاه النهائي</h1>
+
+<p>أدخل القيم يدويًا أو ارفع صورة تحتوي على الأرقام:</p>
+
+<!-- إدخال الأرقام يدويًا -->
+<div>
+  <input type="number" id="awal" placeholder="أول">
+  <input type="number" id="q1" placeholder="ربع1">
+  <input type="number" id="mid" placeholder="نصف">
+  <input type="number" id="q3" placeholder="ربع3">
+  <input type="number" id="akhir" placeholder="آخر">
+  <br>
+  <button onclick="calculateTrend()">احسب الاتجاه</button>
+</div>
+
+<hr>
+
+<!-- رفع صورة -->
+<div>
+  <input type="file" id="imageInput" accept="image/*">
+  <button onclick="readImage()">📷 قراءة من الصورة</button>
+</div>
+
+<div class="result" id="result"></div>
+
+<script>
+function calculateTrend() {
+    let awal = parseFloat(document.getElementById('awal').value);
+    let q1 = parseFloat(document.getElementById('q1').value);
+    let mid = parseFloat(document.getElementById('mid').value);
+    let q3 = parseFloat(document.getElementById('q3').value);
+    let akhir = parseFloat(document.getElementById('akhir').value);
+
+    if ([awal, q1, mid, q3, akhir].some(isNaN)) {
+        alert("الرجاء إدخال جميع القيم أو رفع صورة!");
+        return;
+    }
+
+    // طرق تحقق مبسطة
+    let checks = [];
+    checks.push(akhir > awal ? 'صعود' : (akhir < awal ? 'نزول' : 'محايد'));
+    let maxVal = Math.max(awal, q1, mid, q3, akhir);
+    checks.push((akhir < maxVal*0.7) ? 'متطرف' : 'محايد');
+    let minVal = Math.min(awal, q1, mid, q3, akhir);
+    checks.push((akhir > minVal*1.3) ? 'متطرف' : 'محايد');
+    let avg = (awal + q1 + mid + q3 + akhir)/5;
+    checks.push(akhir > avg ? 'صعود' : 'نزول');
+
+    // حساب الاتجاه النهائي
+    let counts = { 'صعود':0, 'نزول':0, 'محايد':0, 'متطرف':0 };
+    checks.forEach(c => counts[c]++);
+    let finalTrend = Object.keys(counts).reduce((a,b)=> counts[a] >= counts[b]?a:b);
+    let emoji = {'صعود':'📈','نزول':'📉','محايد':'⚪','متطرف':'⚡'};
+    document.getElementById('result').innerHTML = `📊 الاتجاه النهائي: ${finalTrend} ${emoji[finalTrend]}`;
+}
+
+// قراءة القيم من الصورة باستخدام OCR
+function readImage() {
+    const input = document.getElementById('imageInput');
+    if (input.files.length === 0) {
+        alert("اختر صورة أولًا!");
+        return;
+    }
+
+    const file = input.files[0];
+
+    Tesseract.recognize(file, 'ara', { logger: m => console.log(m) })
+    .then(({ data: { text } }) => {
+        const numbers = text.match(/\d+/g);
+        if (!numbers || numbers.length < 5) {
+            alert("لم يتم التعرف على 5 أرقام في الصورة. تأكد من وضوح الأرقام.");
+            return;
+        }
+        document.getElementById('awal').value = numbers[0];
+        document.getElementById('q1').value = numbers[1];
+        document.getElementById('mid').value = numbers[2];
+        document.getElementById('q3').value = numbers[3];
+        document.getElementById('akhir').value = numbers[4];
+
+        calculateTrend();
+    })
+    .catch(err => {
+        console.error(err);
+        alert("حدث خطأ أثناء قراءة الصورة.");
+    });
+}
+</script>
+
+</body>
+</html>
